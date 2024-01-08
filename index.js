@@ -27,10 +27,11 @@ app.all("*", (req, res, next) => {
 // handle error in project (1)
   app.use( (err, req, res, next) => {
     const status = err.status || 500;
-
     res
       .status(status)
-      .json({ EngBreadanMsg: err.message});
+      .json({ EngBreadanMsg: err.message,
+      stack: err.stack
+      });
   });
  
 

@@ -16,4 +16,23 @@ const verifyToken = (req, res, next) => {
     next(new AppError(httpStatusText.ERROR, "no token provided", 401));
   }
 };
+// const verifyAdmen = (req, res, next) => {
+//   verifyToken(req, res, () => {
+//     const { role } = req.user;
+//     if (role!== "admin") {
+//       next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
+//     } else {
+//       next();
+//     }
+//   })
+// }
+const verifyAdmen = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user.role === "admin") {
+      next();
+    } else {
+      next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
+    }
+  });
+};
 export default verifyToken;
