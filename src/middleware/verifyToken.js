@@ -27,12 +27,13 @@ const verifyToken = (req, res, next) => {
 //   })
 // }
 const verifyAdmen = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (req.user.role === "admin") {
-      next();
-    } else {
-      next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
-    }
-  });
+  // veridy that the user is admin
+  const { role } = req.user;
+  console.log(req.user);
+  if (role !== "admin") {
+    next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
+  } else {
+    next();
+  }
 };
-export default verifyToken;
+export { verifyToken, verifyAdmen };
