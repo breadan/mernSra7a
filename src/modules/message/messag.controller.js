@@ -15,7 +15,9 @@ const addMessage = asyncError(async (req, res, next) => {
 });
 
 const getUserMessages = asyncError(async (req, res, next) => {
-  const messages = await messageModel.find({ senderId: req.userId });
+  const messages = await messageModel.paginate({
+    filter: { senderId: req.userId },
+  });
 
   res.status(200).json({
     status: httpStatusText.SUCCESS,
