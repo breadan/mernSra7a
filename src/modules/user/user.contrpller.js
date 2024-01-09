@@ -28,10 +28,7 @@ const signUp = asyncError(async (req, res, next) => {
 export const verify = asyncError(async (req, res, next) => {
   const { token } = req.params;
   jwt.verify(token, process.env.JWT_SECRET2, async (err, decoded) => {
-    if (err)
-      return next(
-        new AppError(httpStatusText.ERROR, "Internal Server Error", 401)
-      );
+    if (err) return next(new AppError(401, "Unauthorized"));
     await userModel.findOneAndUpdate(
       { email: decoded.email },
       { verified: true }
@@ -51,9 +48,7 @@ const signIn = asyncError(async (req, res, next) => {
   const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
   if (!user || !bcrypt.compareSync(password, user.password) || !user.verified) {
-    return next(
-      new AppError(httpStatusText.ERROR, "Internal Server Error", 401)
-    );
+    return next(new AppError(401, "Internal Server Error"));
   } else {
     res.status(200).json({
       status: httpStatusText.SUCCESS,
@@ -83,4 +78,8 @@ const getUser = asyncError(async (req, res, next) => {
   }
 });
 
-export { signUp, signIn, getUsers, getUser };
+const updateUser = asyncError(async (req, res, next) => {
+  //TODO: update user
+});
+
+export { signUp, signIn, getUsers, getUser, updateUser };
