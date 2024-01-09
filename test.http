@@ -1,0 +1,56 @@
+## create user
+
+POST http://localhost:5000/v1/signUp
+content-type: application/json
+
+{
+  "name": "JohnDoe",
+  "email": "cafive3132@talmetry.com",
+  "password": "password123",
+  "age": 25,
+  "verified": false,
+  "isActive": false
+}
+
+
+########## Get users 
+GET http://localhost:5000/v1/users
+content-type: application/json
+
+
+######### ADD message
+POST http://localhost:5000/v1/messages
+content-type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWQ1MjVmMGZlMzFjMDY2YzM5NjQ3NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzMTMyQHRhbG1ldHJ5LmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJDFsZi94VVlnb2d1N0Y4M1dMZjhiUmV4VjFqenJrdHVwczd0U1o1MmRhcUZDaXU1cFdOQ0hXIiwiYWdlIjoyNSwidmVyaWZpZWQiOmZhbHNlLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwiX192IjowfSwiaWF0IjoxNzA0ODE2NTQ2LCJleHAiOjE3MDQ4MjAxNDZ9.nv98JGZ30WJVQkZxOVISf_2wV07NZJHSV2c_J1hJKao
+
+{
+  "message": "Hello World",
+  "receviedId": "5f9b3b3b9b9b9b9b9b9b9b9b"
+  
+
+}
+
+
+#### login
+POST http://localhost:5000/v1/signin
+content-type: application/json
+
+{
+  "email": "cafive3132@talmetry.com",
+  "password": "password123"
+}
+
+#### get messages
+GET http://localhost:5000/v1/messages
+content-type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWQ1MjVmMGZlMzFjMDY2YzM5NjQ3NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzMTMyQHRhbG1ldHJ5LmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJDFsZi94VVlnb2d1N0Y4M1dMZjhiUmV4VjFqenJrdHVwczd0U1o1MmRhcUZDaXU1cFdOQ0hXIiwiYWdlIjoyNSwidmVyaWZpZWQiOmZhbHNlLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwiX192IjowfSwiaWF0IjoxNzA0ODE2NTQ2LCJleHAiOjE3MDQ4MjAxNDZ9.nv98JGZ30WJVQkZxOVISf_2wV07NZJHSV2c_J1hJKao
+
+#### update user
+PATCH http://localhost:5000/v1/user/659d525f0fe31c066c396476
+content-type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWQ1MjVmMGZlMzFjMDY2YzM5NjQ3NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzMTMyQHRhbG1ldHJ5LmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJDFsZi94VVlnb2d1N0Y4M1dMZjhiUmV4VjFqenJrdHVwczd0U1o1MmRhcUZDaXU1cFdOQ0hXIiwiYWdlIjoyNSwidmVyaWZpZWQiOmZhbHNlLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwiX192IjowfSwiaWF0IjoxNzA0ODE2NTQ2LCJleHAiOjE3MDQ4MjAxNDZ9.nv98JGZ30WJVQkZxOVISf_2wV07NZJHSV2c_J1hJKao
+
+{
+  "name": "JohnDoe",
+  "email": ""
+}
