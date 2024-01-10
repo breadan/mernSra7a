@@ -11,4 +11,28 @@ const messageSchema = new Schema(
   { timestamps: true }
 );
 
+messageSchema.statics.paginate = async function ({
+  filter = {},
+  page = 1,
+  limit = 10,
+} = {}) {
+  const query = this.find(filter);
+  const totalDocuments = await this.countDocuments(filter);
+  const totalPages = Math.ceil(totalDocuments / limit);
+  page = page > totalPages ? totalPages : page;
+  page = page <= 0 ? 1 : page;
+
+  query.skip((page - 1) * limit).limit(limit);
+
+  const results = await query.exec();
+
+  return {
+    docs: results,
+    totalDocs: totalDocuments,
+    totalPages: totalPages,
+    page: page,
+    limit: limit,
+  };
+};
+
 export const messageModel = model("Message", messageSchema);

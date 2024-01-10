@@ -26,13 +26,14 @@ const verifyToken = (req, res, next) => {
 //     }
 //   })
 // }
+
+//NOTE: Where already have another auth that verify the token so I removed the verify token from verifyAdmen
 const verifyAdmen = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (req.user.role === "admin") {
-      next();
-    } else {
-      next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
-    }
-  });
+  const { role } = req.user;
+  if (role !== "admin") {
+    next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
+  } else {
+    next();
+  }
 };
-export default verifyToken;
+export { verifyToken, verifyAdmen };

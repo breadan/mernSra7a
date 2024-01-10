@@ -1,38 +1,40 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    trim: true,
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+    },
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    age: {
+      type: Number,
+    },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    role: {
+      type: String,
+      enum: ["user, admin"],
+      default: "user",
+    },
   },
-  email: {
-    type: String,
-    trim: true,
-    lowercase: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  age: {
-    type: Number,
-
-  },
-  verified: {
-    type: Boolean,
-    default: false
-  },
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  // role: {
-  //   type: String,
-  //   enum: ['user, admin'],
-  //   default: "user"
-  // }
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 userSchema.pre("save", async function (next) {
   const user = this;
@@ -49,4 +51,4 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-export const userModel = model('User', userSchema) 
+export const userModel = model("User", userSchema);
