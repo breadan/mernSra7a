@@ -16,16 +16,6 @@ const verifyToken = (req, res, next) => {
     next(new AppError(httpStatusText.ERROR, "no token provided", 401));
   }
 };
-// const verifyAdmen = (req, res, next) => {
-//   verifyToken(req, res, () => {
-//     const { role } = req.user;
-//     if (role!== "admin") {
-//       next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
-//     } else {
-//       next();
-//     }
-//   })
-// }
 
 //NOTE: Where already have another auth that verify the token so I removed the verify token from verifyAdmen
 const verifyAdmen = (req, res, next) => {

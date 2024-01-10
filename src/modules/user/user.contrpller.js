@@ -80,6 +80,11 @@ const getUser = asyncError(async (req, res, next) => {
 
 const updateUser = asyncError(async (req, res, next) => {
   //TODO: update user
+  const {id} = req.params;
+  const {name, email, password, age} = req.body;
+  const user = await userModel.findByIdAndUpdate(id, {name, email, password, age}, {new: true});
+    res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
+    next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
 });
 
 export { signUp, signIn, getUsers, getUser, updateUser };

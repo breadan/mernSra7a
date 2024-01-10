@@ -17,7 +17,8 @@ const addMessage = asyncError(async (req, res, next) => {
 const getUserMessages = asyncError(async (req, res, next) => {
   const messages = await messageModel.paginate({
     filter: { senderId: req.userId },
-  });
+  })
+  // .populate("user");
 
   res.status(200).json({
     status: httpStatusText.SUCCESS,
@@ -31,6 +32,8 @@ const getUserMessages = asyncError(async (req, res, next) => {
 const updateMessage = asyncError(async (req, res, next) => {
   const { id } = req.params;
   const { user, message } = req.body;
+  const {senderId} = await messageModel.findById(id);
+  if(req.userId !== senderId) throw new AppError("this message Not found", 401);
 
   const newMsg = await messageModel.findOneAndUpdate(
     { _id: id, user },
