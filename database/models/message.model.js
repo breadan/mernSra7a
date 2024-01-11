@@ -5,6 +5,7 @@ const messageSchema = new Schema(
     message: {
       type: "string",
     },
+    // user:{type: SchemaTypes.ObjectId,ref: "User"},
     receviedId: SchemaTypes.ObjectId,
     senderId: SchemaTypes.ObjectId,
   },
