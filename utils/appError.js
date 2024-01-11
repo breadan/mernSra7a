@@ -1,14 +1,14 @@
 // handle error in project (2)
 
 export class AppError extends Error {
-  constructor(statusCode, message) {
+  constructor(message, statusCode) {
     super(message);
     this.statusCode = statusCode;
     Error.captureStackTrace(this, this.constructor);
   }
 }
-
-export const errorHandler = (err, res) => {
+// Note: Added missing parameters so the function signature matches the express error handling middleware signature.
+export const errorHandler = (err, req, res, next) => {
   let { statusCode, message } = err;
 
   res.locals.errorMessage = err.message;
@@ -19,7 +19,7 @@ export const errorHandler = (err, res) => {
     ...{ stack: err.stack },
   };
 
-  logger.error(err);
+  console.error(err);
 
   res.status(statusCode).send(response);
 };

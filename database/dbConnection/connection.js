@@ -34,4 +34,13 @@ process.on("SIGINT", async () => {
   process.exit(0);
 });
 
+// export function dbConnection() {
+//     try{
 
+//         mongoose.connect('mongodb+srv://breadan2020:pyvZSWDU6lGb78rK@cluster0.fvcpevt.mongodb.net/')
+//     }catch(err) {
+//         console.log(err)
+//     }
+// }
+
+// pyvZSWDU6lGb78rK

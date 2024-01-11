@@ -17,7 +17,7 @@ const addMessage = asyncError(async (req, res, next) => {
 const getUserMessages = asyncError(async (req, res, next) => {
   const messages = await messageModel.paginate({
     filter: { senderId: req.userId },
-  })
+  });
   // .populate("user");
 
   res.status(200).json({
@@ -31,32 +31,18 @@ const getUserMessages = asyncError(async (req, res, next) => {
 
 const updateMessage = asyncError(async (req, res, next) => {
   const { id } = req.params;
-  const { user, message } = req.body;
-  const {senderId} = await messageModel.findById(id);
-  if(req.userId !== senderId) throw new AppError("this message Not found", 401);
-
+  const { message } = req.body;
   const newMsg = await messageModel.findOneAndUpdate(
-    { _id: id, user },
+    { _id: id, senderId: req.userId },
     { message },
     { new: true }
   );
+
   if (!newMsg) {
-    next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+    return next(new AppError("Message not found", 404));
   }
-  return res
-    .status(200)
-    .json({ status: httpStatusText.SUCCESS, data: { newMsg } });
+  res.status(200).json({ status: httpStatusText.SUCCESS, data: { newMsg } });
 });
 
 export { addMessage, getUserMessages, updateMessage };
 
-// const getUserMs = async (req, res) => {
-//   const { receviedId } = req.body;
-//   const message = await messageModel.find({ receviedId });
-
-//   //pagination
-//   const itemPrePagge = 3;
-//   const requestedPage = req.query.page -1 || 0;
-//   const startIndex = requestedPage * itemPrePagge;
-//   const endIndex = itemPrePagge * startIndex;
-//   const paginatedMsg = message.filter((message, index) => index >= startIndex && index < endIndex);
