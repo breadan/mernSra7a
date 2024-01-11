@@ -1,7 +1,7 @@
 // handle error in project (2)
 
 export class AppError extends Error {
-  constructor(statusCode, message) {
+  constructor(message, statusCode) {
     super(message);
     this.statusCode = statusCode;
     Error.captureStackTrace(this, this.constructor);
