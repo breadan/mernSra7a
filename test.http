@@ -5,11 +5,11 @@ content-type: application/json
 
 {
   "name": "JohnDoe",
-  "email": "cafive3132@talmetry.com",
+  "email": "cafive3s132@talmetry.com",
   "password": "password123",
   "age": 25,
-  "verified": false,
-  "isActive": false
+  "verified": true,
+  "isActive": true
 }
 
 
@@ -21,7 +21,7 @@ content-type: application/json
 ######### ADD message
 POST http://localhost:5000/v1/messages
 content-type: application/json
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWQ1MjVmMGZlMzFjMDY2YzM5NjQ3NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzMTMyQHRhbG1ldHJ5LmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJDFsZi94VVlnb2d1N0Y4M1dMZjhiUmV4VjFqenJrdHVwczd0U1o1MmRhcUZDaXU1cFdOQ0hXIiwiYWdlIjoyNSwidmVyaWZpZWQiOmZhbHNlLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwiX192IjowfSwiaWF0IjoxNzA0ODE2NTQ2LCJleHAiOjE3MDQ4MjAxNDZ9.nv98JGZ30WJVQkZxOVISf_2wV07NZJHSV2c_J1hJKao
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTAzOGZmYWZiYWRjNDhmYTY1M2Y1NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzczEzMkB0YWxtZXRyeS5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRSWldqS3hBdFlMRXNUbWxTS0ZuTmdPdmpNSE9RMXV6dGU0SHQ1T0tjSjNDaU9tOEdTSThoSyIsImFnZSI6MjUsInZlcmlmaWVkIjpmYWxzZSwiaXNBY3RpdmUiOnRydWUsInJvbGUiOiJ1c2VyIiwiY3JlYXRlZEF0IjoiMjAyNC0wMS0xMVQxODo1Mjo0Ny4zMDBaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0xMVQxODo1Mjo0Ny4zMDBaIiwiX192IjowfSwiaWF0IjoxNzA1MDAxMDMxLCJleHAiOjE3MDUwMDQ2MzF9.HzArRZYZ_SWT5LoBF6cplEG61is766jyauDQ7sRDdGY
 
 {
   "message": "Hello World",
@@ -36,14 +36,14 @@ POST http://localhost:5000/v1/signin
 content-type: application/json
 
 {
-  "email": "cafive3132@talmetry.com",
+  "email": "cafive3s132@talmetry.com",
   "password": "password123"
 }
 
 #### get messages
 GET http://localhost:5000/v1/messages
 content-type: application/json
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWQ1MjVmMGZlMzFjMDY2YzM5NjQ3NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzMTMyQHRhbG1ldHJ5LmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJDFsZi94VVlnb2d1N0Y4M1dMZjhiUmV4VjFqenJrdHVwczd0U1o1MmRhcUZDaXU1cFdOQ0hXIiwiYWdlIjoyNSwidmVyaWZpZWQiOmZhbHNlLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0wOVQxNDowNDoxNS4zNzNaIiwiX192IjowfSwiaWF0IjoxNzA0ODE2NTQ2LCJleHAiOjE3MDQ4MjAxNDZ9.nv98JGZ30WJVQkZxOVISf_2wV07NZJHSV2c_J1hJKao
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTAzOGZmYWZiYWRjNDhmYTY1M2Y1NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzczEzMkB0YWxtZXRyeS5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRSWldqS3hBdFlMRXNUbWxTS0ZuTmdPdmpNSE9RMXV6dGU0SHQ1T0tjSjNDaU9tOEdTSThoSyIsImFnZSI6MjUsInZlcmlmaWVkIjpmYWxzZSwiaXNBY3RpdmUiOnRydWUsInJvbGUiOiJ1c2VyIiwiY3JlYXRlZEF0IjoiMjAyNC0wMS0xMVQxODo1Mjo0Ny4zMDBaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0xMVQxODo1Mjo0Ny4zMDBaIiwiX192IjowfSwiaWF0IjoxNzA1MDAxMDMxLCJleHAiOjE3MDUwMDQ2MzF9.HzArRZYZ_SWT5LoBF6cplEG61is766jyauDQ7sRDdGY
 
 #### update user
 PATCH http://localhost:5000/v1/user/659d525f0fe31c066c396476
@@ -53,4 +53,14 @@ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWQ1MjVmMGZl
 {
   "name": "JohnDoe",
   "email": ""
+}
+
+
+#### Update message
+PATCH http://localhost:5000/v1/messages/65a042969044b6d9ad4e7807
+content-type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1YTAzOGZmYWZiYWRjNDhmYTY1M2Y1NiIsIm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJjYWZpdmUzczEzMkB0YWxtZXRyeS5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRSWldqS3hBdFlMRXNUbWxTS0ZuTmdPdmpNSE9RMXV6dGU0SHQ1T0tjSjNDaU9tOEdTSThoSyIsImFnZSI6MjUsInZlcmlmaWVkIjpmYWxzZSwiaXNBY3RpdmUiOnRydWUsInJvbGUiOiJ1c2VyIiwiY3JlYXRlZEF0IjoiMjAyNC0wMS0xMVQxODo1Mjo0Ny4zMDBaIiwidXBkYXRlZEF0IjoiMjAyNC0wMS0xMVQxODo1Mjo0Ny4zMDBaIiwiX192IjowfSwiaWF0IjoxNzA1MDAxMDMxLCJleHAiOjE3MDUwMDQ2MzF9.HzArRZYZ_SWT5LoBF6cplEG61is766jyauDQ7sRDdGY
+
+{
+  "message": "Hello Worlsssd"
 }
