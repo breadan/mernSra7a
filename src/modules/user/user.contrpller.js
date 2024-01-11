@@ -48,7 +48,7 @@ const signIn = asyncError(async (req, res, next) => {
   const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
   if (!user || !bcrypt.compareSync(password, user.password) || !user.verified) {
-    return next(new AppError(401, "Internal Server Error"));
+    return next(new AppError("Unauthorized", 401));
   } else {
     res.status(200).json({
       status: httpStatusText.SUCCESS,
@@ -56,17 +56,17 @@ const signIn = asyncError(async (req, res, next) => {
       token,
     });
   }
-  console.error("Error during sign-in:", error);
 });
 
 const getUsers = asyncError(async (req, res, next) => {
   const users = await userModel.find();
-  if (users) {
-    res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
-    console.error(error);
-  } else {
-    next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
-  }
+  // It is not an error to return an em
+  // if (users) {
+  //   res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
+  //   console.error(error);
+  // } else {
+  //   next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+  // }
 });
 
 const getUser = asyncError(async (req, res, next) => {
@@ -80,11 +80,15 @@ const getUser = asyncError(async (req, res, next) => {
 
 const updateUser = asyncError(async (req, res, next) => {
   //TODO: update user
-  const {id} = req.params;
-  const {name, email, password, age} = req.body;
-  const user = await userModel.findByIdAndUpdate(id, {name, email, password, age}, {new: true});
-    res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
-    next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+  const { id } = req.params;
+  const { name, email, password, age } = req.body;
+  const user = await userModel.findByIdAndUpdate(
+    id,
+    { name, email, password, age },
+    { new: true }
+  );
+  res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
+  next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
 });
 
 export { signUp, signIn, getUsers, getUser, updateUser };
