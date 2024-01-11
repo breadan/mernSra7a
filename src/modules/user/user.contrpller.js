@@ -47,10 +47,7 @@ const signIn = asyncError(async (req, res, next) => {
 
   const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-  if (
-    !user ||
-    !bcrypt.compareSync(password, user.password) /*|| !user.verified*/
-  ) {
+  if (!user || !bcrypt.compareSync(password, user.password) || !user.verified) {
     return next(new AppError("Unauthorized", 401));
   } else {
     res.status(200).json({
