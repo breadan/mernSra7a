@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv"; //secure 1
 import userRouter from "./src/modules/user/user.routes.js";
-import httpStatusText from "./utils/httpStatusText.js";
 import "./database/dbConnection/connection.js";
 import messageRouter from "./src/modules/message/message.routes.js";
 import { AppError, errorHandler } from "./utils/appError.js";

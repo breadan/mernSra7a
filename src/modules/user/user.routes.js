@@ -14,7 +14,7 @@ import { verifyAdmen } from "../../middleware/verifyToken.js";
 
 const userRouter = express.Router();
 
-userRouter.post("/v1/signUp", [validate.signUp, middSignUp], signUp, (err, data)=>{
+userRouter.post("/v1/signUp", [validate.signUp], signUp, (err, data)=>{
   if (err) {
     next(err)
   }else{

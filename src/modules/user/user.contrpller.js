@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import httpStatusText from "../../../utils/httpStatusText.js";
 import jwt, { decode } from "jsonwebtoken";
 import { sendEmail } from "../../../utils/email.js";
-import asyncHandler from "express-async-handler";
 import asyncError from "../../../utils/asyncError.js";
 import { AppError } from "../../../utils/appError.js";
 //to have url
@@ -13,22 +12,30 @@ const logger = (req, res, next) => {
 };
 
 const signUp = asyncError(async (req, res, next) => {
-  const { name, email, password, age } = req.body;
+  const user = await userModel.findOne({ email: req.body.email });
+  if (user) {
+  
+    next(new AppError( "Email Already Exists", 409));
+  }else {
 
-  const newUser = await userModel.create({ name, email, password, age });
-  //mailer
-  sendEmail({ email });
-  res.status(201).json({ status: httpStatusText.SUCCESS, data: { newUser } });
-
-  console.error(error);
-
-  next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+    const { name, email, password, age } = req.body;
+  
+    const newUser = await userModel.create({ name, email, password, age });
+    //mailer
+    sendEmail({ email });
+    
+    res.status(201).json({ status: httpStatusText.SUCCESS, data: { newUser } });
+  
+    // console.error(error);
+  
+  }
 });
+
 
 export const verify = asyncError(async (req, res, next) => {
   const { token } = req.params;
   jwt.verify(token, process.env.JWT_SECRET2, async (err, decoded) => {
-    if (err) return next(new AppError(401, "Unauthorized"));
+    if (err) return next(new AppError( "Unauthorized", 401));
     await userModel.findOneAndUpdate(
       { email: decoded.email },
       { verified: true }
@@ -61,12 +68,12 @@ const signIn = asyncError(async (req, res, next) => {
 const getUsers = asyncError(async (req, res, next) => {
   const users = await userModel.find();
   // It is not an error to return an em
-  // if (users) {
-  //   res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
-  //   console.error(error);
-  // } else {
-  //   next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
-  // }
+  if (users) {
+    res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
+    console.error(error);
+  } else {
+    next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+  }
 });
 
 const getUser = asyncError(async (req, res, next) => {
