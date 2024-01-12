@@ -1,4 +1,5 @@
 import { Schema, model, SchemaTypes } from "mongoose";
+import { AppError } from "../../utils/appError.js";
 
 const messageSchema = new Schema(
   {
@@ -12,7 +13,7 @@ const messageSchema = new Schema(
   { timestamps: true }
 );
 
-messageSchema.statics.paginate = async function ({
+ messageSchema.statics.paginate = async function ({
   filter = {},
   page = 1,
   limit = 10,
@@ -26,6 +27,7 @@ messageSchema.statics.paginate = async function ({
   query.skip((page - 1) * limit).limit(limit);
 
   const results = await query.exec();
+ 
 
   return {
     docs: results,
@@ -34,6 +36,10 @@ messageSchema.statics.paginate = async function ({
     page: page,
     limit: limit,
   };
+
+
+
+
 };
 
 export const messageModel = model("Message", messageSchema);

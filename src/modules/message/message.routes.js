@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addMessage,
+  deleteMessage,
   getUserMessages,
   updateMessage,
 } from "../../modules/message/messag.controller.js";
@@ -13,5 +14,6 @@ const messageRouter = express.Router();
 messageRouter.post("/", [validate.message, auth], addMessage);
 messageRouter.get("/", auth, getUserMessages);
 messageRouter.patch("/:id", [auth, verifyToken], updateMessage);
+messageRouter.delete("/:id", [auth, verifyToken], deleteMessage);
 
 export default messageRouter;
