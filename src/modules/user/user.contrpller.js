@@ -68,12 +68,21 @@ const signIn = asyncError(async (req, res, next) => {
 const getUsers = asyncError(async (req, res, next) => {
   const users = await userModel.find();
   // It is not an error to return an em
+<<<<<<< HEAD
   if (users) {
     res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
     console.error(error);
   } else {
     next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
   }
+=======
+  // if (users) {
+  //   res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
+  //   console.error(error);
+  // } else {
+  //   next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+  // }
+>>>>>>> f2e42d1018dfe3996e4800a118cf308650509295
 });
 
 const getUser = asyncError(async (req, res, next) => {
