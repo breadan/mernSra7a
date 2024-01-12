@@ -19,16 +19,13 @@ export const auth = async (req, res, next) => {
         message: "User not found",
       });
     }
-<<<<<<< HEAD
     
-=======
-    // if (!user.verified) {
-    //   return res.status(403).json({
-    //     status: "ERROR",
-    //     message: "User not verified",
-    //   });
-    // }
->>>>>>> f2e42d1018dfe3996e4800a118cf308650509295
+    if (!user.verified) {
+      return res.status(403).json({
+        status: "ERROR",
+        message: "User not verified",
+      });
+    }
 
     req.userId = user._id;
     req.user = user;
