@@ -24,7 +24,7 @@ const signUp = asyncError(async (req, res, next) => {
     //mailer
     sendEmail({ email });
     
-    res.status(201).json({ status: httpStatusText.SUCCESS, data: { newUser } });
+   return res.status(201).json({ status: httpStatusText.SUCCESS, data: { newUser } });
   
     // console.error(error);
   
@@ -72,7 +72,7 @@ const getUsers = asyncError(async (req, res, next) => {
     res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
     console.error(error);
   } else {
-    next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+    next(new AppError("Internal Server Error", 401));
   }
 });
 
@@ -81,7 +81,7 @@ const getUser = asyncError(async (req, res, next) => {
   if (user) {
     res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
   } else {
-    next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+    next(new AppError( "Internal Server Error", 401));
   }
 });
 
@@ -95,7 +95,7 @@ const updateUser = asyncError(async (req, res, next) => {
     { new: true }
   );
   res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
-  next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+  next(new AppError( "Internal Server Error", 401));
 });
 
 export { signUp, signIn, getUsers, getUser, updateUser };
