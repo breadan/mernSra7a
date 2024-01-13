@@ -13,13 +13,13 @@ export const auth = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = decoded.user;
-    if (!user || !user.verified) {
+    if (!user) {
       return res.status(401).json({
         status: "ERROR",
         message: "User not found",
       });
     }
-    
+
     if (!user.verified) {
       return res.status(403).json({
         status: "ERROR",
