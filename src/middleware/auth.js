@@ -8,7 +8,7 @@ export const auth = async (req, res, next) => {
       status: "ERROR",
       message: "No token, authorization denied",
     });
-  }
+  }git 
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
