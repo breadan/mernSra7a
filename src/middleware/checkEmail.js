@@ -12,7 +12,7 @@ const middSignUp = asyncError(async (req, res, next) => {
     //   message: "Email Already Exists",
     // });
     // changed status code to 409
-    next(new AppError(409, "Email Already Exists"));
+    next(new AppError("Email Already Exists",409 ));
   }
   next();
 });

@@ -10,10 +10,10 @@ const verifyToken = (req, res, next) => {
       req.user = decoded;
       next();
     } catch (e) {
-      next(new AppError(httpStatusText.ERROR, "Internal Server Error", 401));
+      next(new AppError( "Internal Server Error", 401));
     }
   } else {
-    next(new AppError(httpStatusText.ERROR, "no token provided", 401));
+    next(new AppError( "no token provided", 401));
   }
 };
 
@@ -21,7 +21,7 @@ const verifyToken = (req, res, next) => {
 const verifyAdmen = (req, res, next) => {
   const { role } = req.user;
   if (role !== "admin") {
-    next(new AppError(httpStatusText.ERROR, "you are not admin", 401));
+    next(new AppError( "you are not admin", 401));
   } else {
     next();
   }
