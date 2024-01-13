@@ -98,8 +98,21 @@ const updateUser = asyncError(async (req, res, next) => {
 
 //upload profile photo
 
+/**
+ * 1- {Validation}
+ * 2- Get the path to the image
+ * 3- Upload to Cloudinary server
+ * 4- Get the user from DB
+ * 5- Delete the old profile photo if exist
+ * 6- Change the profile photo field in the DB 
+ * 
+ */
+
 const uploadProfilePhoto = asyncError(async(req, res)=> {
   console.log(req.file)
+  if(!req.file) {
+    return res.status(400).json({message: 'No File Selected'})
+  }
   res.status(200).json({message: 'Profile Photo Uploaded Successfully'})
 });
 
