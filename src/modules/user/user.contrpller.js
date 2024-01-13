@@ -5,6 +5,13 @@ import jwt, { decode } from "jsonwebtoken";
 import { sendEmail } from "../../../utils/email.js";
 import asyncError from "../../../utils/asyncError.js";
 import { AppError } from "../../../utils/appError.js";
+import { dirname } from "path";
+import * as path from "path";
+import {
+  cloudinaryRemove,
+  cloudinaryUpload,
+} from "../../../utils/cloudinary.js";
+
 //to have url
 const logger = (req, res, next) => {
   console.log(req.url);
@@ -64,7 +71,7 @@ const signIn = asyncError(async (req, res, next) => {
 });
 
 const getUsers = asyncError(async (req, res, next) => {
-  const users = await userModel.find().select('-password');
+  const users = await userModel.find().select("-password");
   // It is not an error to return an em
   if (users) {
     res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
@@ -104,16 +111,26 @@ const updateUser = asyncError(async (req, res, next) => {
  * 3- Upload to Cloudinary server
  * 4- Get the user from DB
  * 5- Delete the old profile photo if exist
- * 6- Change the profile photo field in the DB 
- * 
+ * 6- Change the profile photo field in the DB
+ * 7- send response to clint
+ * 8- remove image from the server
  */
 
-const uploadProfilePhoto = asyncError(async(req, res)=> {
-  console.log(req.file)
-  if(!req.file) {
-    return res.status(400).json({message: 'No File Selected'})
+const uploadProfilePhoto = asyncError(async (req, res) => {
+  //1
+  console.log(req.file);
+  if (!req.file) {
+    return res.status(400).json({ message: "No File Selected" });
   }
-  res.status(200).json({message: 'Profile Photo Uploaded Successfully'})
+  //2
+  const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+  //3 -in another folder
+  //4
+  const result = await cloudinaryUpload(imagePath);
+  console.log(result);
+
+  //7
+  res.status(200).json({ message: "Profile Photo Uploaded Successfully" });
 });
 
 export { signUp, signIn, getUsers, getUser, updateUser, uploadProfilePhoto };
