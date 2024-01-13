@@ -98,4 +98,12 @@ const updateUser = asyncError(async (req, res, next) => {
   next(new AppError( "Internal Server Error", 401));
 });
 
-export { signUp, signIn, getUsers, getUser, updateUser };
+//upload profile photo
+
+const uploadProfilePhoto = asyncError(async (req, res, next) => {
+  console.log(req.file)
+  res.status(200).json({ status: httpStatusText.SUCCESS });
+  next(new AppError( "Internal Server Error", 401));
+});
+
+export { signUp, signIn, getUsers, getUser, updateUser,uploadProfilePhoto };
