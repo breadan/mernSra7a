@@ -28,7 +28,7 @@ const photoUpload = multer({
         }
     },
     limits: {
-        fileSize: 1024 * 1024  //1mg of file size
+        fileSize: 1024 * 1024 *5  //1mg of file size
     }
 })
 

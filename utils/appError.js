@@ -9,6 +9,7 @@ export class AppError extends Error {
 }
 // Note: Added missing parameters so the function signature matches the express error handling middleware signature.
 export const errorHandler = (err, req, res, next) => {
+  console.log("🚀 ~ errorHandler ~ err:", err);
   let { statusCode, message } = err;
 
   res.locals.errorMessage = err.message;
