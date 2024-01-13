@@ -14,6 +14,14 @@ app.use(cors());
 app.use(express.json());
 app.use(userRouter);
 app.use("/v1/messages", messageRouter);
+// app.use(( err, req, res, next ) => {
+//   res.locals.error = err;
+//   if (err.status >= 100 && err.status < 600)
+//     res.status(err.status);
+//   else
+//     res.status(500);
+//   res.render('error');
+// });
 app.get("/", (req, res) => res.send(" World!"));
 
 app.all("*", (req, res, next) => {
