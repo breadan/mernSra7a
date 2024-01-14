@@ -2,11 +2,11 @@ import multer from "multer";
 import { dirname } from 'path';
 import * as path from 'path';
 
-const __dirname = dirname("../images");
+const imagesDirname = "./upload"
 const photoStorage = multer.diskStorage({
 
     destination: function (req, file, cb)  {
-        cb(null, path.join(__dirname, "./images"));
+        cb(null, imagesDirname);
     },
     filename: function (req, file, cb) {
         if (file) {

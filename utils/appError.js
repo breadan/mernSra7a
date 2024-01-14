@@ -22,5 +22,5 @@ export const errorHandler = (err, req, res, next) => {
 
   console.error(err);
 
-  res.status(statusCode).send(response);
+  res.status(statusCode || 500).send(response);
 };

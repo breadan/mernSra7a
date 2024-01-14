@@ -120,20 +120,20 @@ const updateUser = asyncError(async (req, res, next) => {
  */
 
 const profilePhoto = asyncError(async (req, res) => {
+
   //1
-  console.log(req.file);
   if (!req.file) {
     return res.status(400).json({ message: "No File Selected" });
   }
   //2
-  const imagePath = path.join(__dirname, `./images/${req.file.filename}`);
+  const imagePath = path.join("images", req.file.filename)
   //3 -in another folder
   //4
   const result = await cloudinaryUpload(imagePath);
   console.log(result);
 
   //
-  const user = await userModel.findById(req.user.id);
+  const user = await userModel.findById(req.user._id);
   if (!user) {
     return res.status(404).json({
       status: 404,
