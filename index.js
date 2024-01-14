@@ -14,17 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(userRouter);
 app.use("/v1/messages", messageRouter);
-app.use((req, res, next) => {   //
-  const err = new Error("Not Found");
-  err.status = 404;
-  next(err);
-});
-app.use((err, req, res, next) => {    //
-  res.locals.error = err;
-  const status = err.status || 500;
-  res.status(status);
-  res.render("error");
-});
+
 app.get("/", (req, res) => res.send(" World!"));
 
 app.all("*", (req, res, next) => {

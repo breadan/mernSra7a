@@ -40,7 +40,7 @@ const verifyUserAccess = (req, res, next) => {
 }
 const verifyUserAndAdmin = (req, res, next) => {
   verifyToken (req, res, () => {
-    if (req.user.id === req.params.id || req.user.isAdmin) {
+    if (req.user.id === req.params.id ||role !== "admin") {
       next();
     } else {
       return res.status(403).json({
