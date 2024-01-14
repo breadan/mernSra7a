@@ -95,10 +95,10 @@ const getUser = asyncError(async (req, res, next) => {
 
 const updateUser = asyncError(async (req, res, next) => {
   //TODO: update user
-  const { id } = req.params;
+  // const { id } = req.params;
   const { name, email, password, age } = req.body;
   const user = await userModel.findByIdAndUpdate(
-    id,
+    req.userId,
     { name, email, password, age },
     { new: true }
   );
