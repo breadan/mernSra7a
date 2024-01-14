@@ -18,8 +18,8 @@ const getUserMessages = asyncError(async (req, res, next) => {
   const messages = await messageModel.paginate({
     filter: { senderId: req.userId },
   });
-  if (!req.body.message) {
-    next(new AppError("No message For Yoy", 404));
+  if (!messages) {
+    next(new AppError("No message For U", 404));
   } else {
     res.status(200).json({
       status: httpStatusText.SUCCESS,

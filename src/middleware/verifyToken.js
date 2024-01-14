@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { AppError } from "../../utils/appError.js";
-import httpStatusText from "../../utils/httpStatusText.js";
 
 const verifyToken = (req, res, next) => {
   const token = req.headers.token;
@@ -26,6 +25,7 @@ const verifyAdmen = (req, res, next) => {
     next();
   }
 };
+
 const verifyUserAccess = (req, res, next) => {
   verifyToken (req, res, () => {
     if (req.user.id === req.params.id) {
@@ -40,7 +40,7 @@ const verifyUserAccess = (req, res, next) => {
 }
 const verifyUserAndAdmin = (req, res, next) => {
   verifyToken (req, res, () => {
-    if (req.user.id === req.params.id ||role !== "admin") {
+    if (req.user.id === req.params.id ||req.user.role !== "admin") {
       next();
     } else {
       return res.status(403).json({

@@ -16,10 +16,6 @@ const cloudinaryUpload = async (fileToUpload) => {
         console.log(result, error);
       }
     );
-
-    // const data = await cloudinary.Uploader.upload(fileToUpload, {
-    // resource_type: "auto",
-    // });
     return data;
   } catch (e) {
     return e;

@@ -3,7 +3,7 @@ import validator from "validator";
 const rules = {
   nameNotEmpty: (req, res, next) => {
     const name = req.body.name;
-    if (!name || name.trim().length < 3 || name.trim().length > 10) {
+    if (!name || name.trim().length < 3 || name.trim().length > 15) {
       next({
         name: "validation Error",
         element: "name : name",
