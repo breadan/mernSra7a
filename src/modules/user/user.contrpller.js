@@ -11,6 +11,9 @@ import {
   cloudinaryRemove,
   cloudinaryUpload,
 } from "../../../utils/cloudinary.js";
+import fs from "fs";
+
+const __dirname = dirname("../images");
 
 //to have url
 const logger = (req, res, next) => {
@@ -116,21 +119,79 @@ const updateUser = asyncError(async (req, res, next) => {
  * 8- remove image from the server
  */
 
-const uploadProfilePhoto = asyncError(async (req, res) => {
+const profilePhoto = asyncError(async (req, res) => {
   //1
   console.log(req.file);
   if (!req.file) {
     return res.status(400).json({ message: "No File Selected" });
   }
   //2
-  const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+  const imagePath = path.join(__dirname, `./images/${req.file.filename}`);
   //3 -in another folder
   //4
   const result = await cloudinaryUpload(imagePath);
   console.log(result);
 
+  //
+  const user = await userModel.findById(req.user.id);
+  if (!user) {
+    return res.status(404).json({
+      status: 404,
+      message: "User not found",
+    });
+  }
+  if (user.profilePhoto.publicId !== null) {
+    await cloudinaryRemove(user.profilePhoto.publicId);
+  }
+  user.profilePhoto = {
+    url: result.secure_url,
+    publicId: result.public_id,
+  };
+  await user.save();
+
   //7
-  res.status(200).json({ message: "Profile Photo Uploaded Successfully" });
+  res.status(200).json({
+    message: "Profile Photo Uploaded Successfully",
+    profilePhoto: { url: result.secure_url, publicId: result.public_id },
+  });
+  fs.unlinkSync(imagePath);
 });
 
-export { signUp, signIn, getUsers, getUser, updateUser, uploadProfilePhoto };
+/*
+#Desc: delete User Profile 
+#Rout: /api/users/profile/:id
+#Method: delete
+#Access:  User himself or admin
+*/
+/**
+ * 1- get userfrom DB
+ * 2- git all posts from DB
+ * 3- get the public ids from the posts
+ * 4- delete all posts image from cloudinary
+ * 5- delete profile picture from cloudinary
+ * 6- delete user posts & comments
+ * 7- delete the user himself
+ * 8- send response
+ */
+const deleteUserProfile = asyncError(async (req, res) => {
+  const user = await userModel.findById(req.params.id);
+  if (!user) {
+    return res.status(404).json({
+      status: 404,
+      message: "User not found",
+    });
+  }
+  await cloudinaryRemove(user.profilePhoto.publicId);
+  await userModel.findByIdAndDelete(req.params.id);
+  res.status(200).json({ message: "User Deleted Successfully" });
+});
+
+export {
+  signUp,
+  signIn,
+  getUsers,
+  getUser,
+  updateUser,
+  profilePhoto,
+  deleteUserProfile,
+};

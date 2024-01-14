@@ -26,4 +26,28 @@ const verifyAdmen = (req, res, next) => {
     next();
   }
 };
-export { verifyToken, verifyAdmen };
+const verifyUserAccess = (req, res, next) => {
+  verifyToken (req, res, () => {
+    if (req.user.id === req.params.id) {
+      next();
+    } else {
+      return res.status(403).json({
+        Status: false,
+        message: "Not Allowed, Only User can access His Profile",
+      });
+    }
+  })
+}
+const verifyUserAndAdmin = (req, res, next) => {
+  verifyToken (req, res, () => {
+    if (req.user.id === req.params.id || req.user.isAdmin) {
+      next();
+    } else {
+      return res.status(403).json({
+        Status: false,
+        message: "Not Allowed, Only User can access His Profile or Admin",
+      });
+    }
+  })
+}
+export { verifyToken, verifyAdmen, verifyUserAndAdmin, verifyUserAccess };

@@ -5,13 +5,13 @@ import * as path from 'path';
 const __dirname = dirname("../images");
 const photoStorage = multer.diskStorage({
 
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../images"));
+    destination: function (req, file, cb)  {
+        cb(null, path.join(__dirname, "./images"));
     },
-    filename: (req, file, cb) => {
+    filename: function (req, file, cb) {
         if (file) {
 
-            cb(null, new Date().toISOString().replace(/:/g, "_") + file.originalname);
+            cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
         }else {
             cb(null, false)
         }
@@ -28,7 +28,7 @@ const photoUpload = multer({
         }
     },
     limits: {
-        fileSize: 1024 * 1024 *5  //1mg of file size
+        fileSize: 1024 * 1024   //1mg of file size
     }
 })
 
