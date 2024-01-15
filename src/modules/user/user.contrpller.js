@@ -129,8 +129,6 @@ const profilePhoto = asyncError(async (req, res) => {
   const imagePath = path.join("images", req.file.filename)
   //3 -in another folder
   //4
-  const result = await cloudinaryUpload(imagePath);
-  console.log(result);
 
   //
   const user = await userModel.findById(req.user._id);
@@ -144,15 +142,14 @@ const profilePhoto = asyncError(async (req, res) => {
     await cloudinaryRemove(user.profilePhoto.publicId);
   }
   user.profilePhoto = {
-    url: result.secure_url,
-    publicId: result.public_id,
+    url: `/public/${req.file.filename}`
   };
   await user.save();
 
   //7
   res.status(200).json({
     message: "Profile Photo Uploaded Successfully",
-    profilePhoto: { url: result.secure_url, publicId: result.public_id },
+    user,
   });
   fs.unlinkSync(imagePath);
 });

@@ -1,18 +1,19 @@
 import multer from "multer";
 import { dirname } from 'path';
 import * as path from 'path';
+import { randomUUID } from "crypto"
 
 const imagesDirname = "./upload"
 const photoStorage = multer.diskStorage({
 
-    destination: function (req, file, cb)  {
+    destination: function (req, file, cb) {
         cb(null, imagesDirname);
     },
     filename: function (req, file, cb) {
         if (file) {
 
-            cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
-        }else {
+            cb(null, `${randomUUID()}${path.extname(file.originalname)}`);
+        } else {
             cb(null, false)
         }
     }
@@ -20,11 +21,11 @@ const photoStorage = multer.diskStorage({
 
 const photoUpload = multer({
     storage: photoStorage,
-    fileFilter: function(req, file, cb) {
+    fileFilter: function (req, file, cb) {
         if (file.mimetype.startsWith('image')) {    //u can put formatted image here
             cb(null, true);
         } else {
-            cb({message: "Unsupported File format"}, false);
+            cb({ message: "Unsupported File format" }, false);
         }
     },
     limits: {

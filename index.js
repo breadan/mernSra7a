@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(userRouter);
 app.use("/v1/messages", messageRouter);
+app.use("/public", express.static("upload"));
 
 app.all("*", (req, res, next) => {
   next(new AppError(`This Resource Is Not Available ${req.originalUrl}`, 404));
