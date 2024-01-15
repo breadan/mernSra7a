@@ -9,7 +9,7 @@ export const sendEmail = async (options) => {
 
     auth: {
       user: "breadan2020@gmail.com",
-      pass: "lirbufoyjypseldt",
+      pass: "kqokurivlrvaxezl",
     },
   });
 

@@ -126,7 +126,7 @@ const profilePhoto = asyncError(async (req, res) => {
     return res.status(400).json({ message: "No File Selected" });
   }
   //2
-  const imagePath = path.join("images", req.file.filename)
+  const imagePath = path.join("upload", req.file.filename)
   //3 -in another folder
   //4
   const result = await cloudinaryUpload(imagePath);
