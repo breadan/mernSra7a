@@ -28,10 +28,10 @@ userRouter.post("/v1/signUp", [validate.signUp], signUp, (err, data) => {
 userRouter.post("/v1/signIn", signIn);
 userRouter.post("/v1/profile", [auth], photoUpload.single("image"), profilePhoto);
 userRouter.get("/v1/verify/:token", verify);
-userRouter.get("/v1/users", verifyToken,getUsers);    //verifyUserAndAdmin
+userRouter.get("/v1/users", verifyAdmen,getUsers);    
 userRouter.get("/v1/user/:id",getUser);
 // update user
-userRouter.put("/v1/user/:id", [auth,verifyUserAccess], updateUser);
-userRouter.delete("/v1/user/:id", [auth ], deleteUserProfile);//verifyUserAccess
+userRouter.put("/v1/user/:id", [verifyAdmen], updateUser);
+userRouter.delete("/v1/user/:id", [auth, verifyUserAndAdmin ], deleteUserProfile);
 
 export default userRouter;

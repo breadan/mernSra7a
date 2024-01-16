@@ -7,13 +7,13 @@ import {
 } from "../../modules/message/messag.controller.js";
 import validate from "../../middleware/validate.message.js";
 import { auth } from "../../middleware/auth.js";
-import { verifyToken, verifyUserAccess } from "../../middleware/verifyToken.js";
+import { verifyToken, verifyUserAccess, verifyUserAndAdmin } from "../../middleware/verifyToken.js";
 
 const messageRouter = express.Router();
 
 messageRouter.post("/", [validate.message, auth, verifyUserAccess], addMessage);
 messageRouter.get("/", [auth, verifyUserAccess], getUserMessages);
-messageRouter.patch("/:id", [auth, verifyToken], updateMessage);
-messageRouter.delete("/:id", [auth, verifyToken], deleteMessage);
+messageRouter.patch("/:id", [auth, verifyUserAccess], updateMessage);
+messageRouter.delete("/:id", [auth, verifyUserAndAdmin], deleteMessage);
 
 export default messageRouter;

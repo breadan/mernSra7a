@@ -27,7 +27,9 @@ const verifyToken = (req, res, next) => {
 
 const verifyUserAccess = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user._id === req.res.id) {        //?????
+    const {id} = req.params;
+    console.log(req.user.user._id)
+    if (req.user.user._id === id) {        
       next();
     } else {
       return res.status(403).json({
@@ -37,10 +39,16 @@ const verifyUserAccess = (req, res, next) => {
     }
   });
 };
+
 //NOTE: Where already have another auth that verify the token so I removed the verify token from verifyAdmen
 const verifyAdmen = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.isAdmin) {
+    // const check = req.user.user.isAdmin;      //why === undefined?????
+    const check2 = req.user.user.role;
+    // console.log(check)
+    console.log(check2)
+
+    if ( check2 === 'admin' ) {     //||isAdmin
       next();
     } else {
       return res.status(403).json({
@@ -53,8 +61,12 @@ const verifyAdmen = (req, res, next) => {
 
 
 const verifyUserAndAdmin = (req, res, next) => {
+  
   verifyToken(req, res, () => {
-    if (req.user.id === req.params.id || req.user.isAdmin) {
+    const check2 = req.user.user.role;
+    console.log(check2)
+    const {id} = req.params;
+    if (check2 === 'admin'|| req.user.user._id === id) {
       next();
     } else {
       return res.status(403).json({

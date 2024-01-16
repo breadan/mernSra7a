@@ -59,13 +59,6 @@ const signIn = asyncError(async (req, res, next) => {
   if (!user || !bcrypt.compareSync(password, user.password) || !user.verified) {
     return next(new AppError("Error In Log In Or Email Not Verified! ", 422));
   } else {
-  //   const token = user.generateAuthToken(); //it create new token  //test it with code in schema
-  // res.status(200).json({
-  //   _id: user._id,
-  //   isAdmin: user.isAdmin,
-  //   profilePhoto: user.profilePhoto,
-  //   token,
-  // });
     res.status(200).json({
       status: httpStatusText.SUCCESS,
       message: "Login Successful",
@@ -98,7 +91,7 @@ const updateUser = asyncError(async (req, res, next) => {
 
   const { name, password, age } = req.body;
   const user = await userModel.findByIdAndUpdate(
-    req.userId,
+    req.user.user._id,
     { name, password, age },  
     { new: true }
   );
