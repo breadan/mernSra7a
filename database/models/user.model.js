@@ -6,15 +6,23 @@ const userSchema = new Schema(
     name: {
       type: String,
       trim: true,
+      required: true,
+      minLength: 4,
+      maxLength: 10,
     },
     email: {
       type: String,
       trim: true,
       lowercase: true,
+      unique: true,
+      required: true,
+      match: [/.+@.+\..+/, "Please enter a valid email"],
     },
     password: {
       type: String,
       required: true,
+      min:[4, "Password must be at least 4 characters"],
+      max: [10, "Password must be at least 10 characters"]
     },
     age: {
       type: Number,
@@ -56,7 +64,7 @@ userSchema.pre("save", async function (next) {
 
   try {
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(user.password, salt);
+    const hashedPassword = bcrypt.hashSync(user.password, salt);
     user.password = hashedPassword;
     next();
   } catch (error) {

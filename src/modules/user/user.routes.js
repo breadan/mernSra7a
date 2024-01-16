@@ -11,7 +11,7 @@ import {
 
 } from "../../modules/user/user.contrpller.js";
 import validate from "../../middleware/validate.js";
-import middSignUp from "../../middleware/checkEmail.js";//
+// import middSignUp from "../../middleware/checkEmail.js";//
 import { auth } from "../../middleware/auth.js";
 import { verifyAdmen, verifyUserAccess, verifyUserAndAdmin } from "../../middleware/verifyToken.js";
 import { photoUpload } from "../../middleware/photoUpload.js";

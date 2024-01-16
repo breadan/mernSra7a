@@ -8,20 +8,20 @@ export const sendEmail = async (options) => {
     service: "gmail",
 
     auth: {
-      user: "breadan2020@gmail.com",
-      pass: "kqokurivlrvaxezl",
+      user: process.env.APP_EMAIL_ADDRESS,
+      pass: process.env.APP_EMAIL_PASSWORD,
     },
   });
 
   const token = jwt.sign({ email: options.email }, process.env.JWT_SECRET2, {
-    expiresIn: "1h",
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"Eng Alaa Breadan " <breadan2020@gmail.com>', // sender address
+    from: process.env.APP_EMAIL_ADDRESS, // sender address
     to: options.email, // list of receivers
-    subject: "Hello ✔", // Subject line
+    subject: "Welcom Our Site", // Subject line
     html: htmlCode(token), // html body
   });
 
