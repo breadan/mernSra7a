@@ -2,12 +2,12 @@ import jwt from "jsonwebtoken";
 
 export const auth = async (req, res, next) => {
   let token = req.header("token");
-
+  console.log(token);
   if (!token) {
     return res.status(401).json({
       status: "ERROR",
       message: "No token, authorization denied",
-    });  
+    });
   }
 
   try {

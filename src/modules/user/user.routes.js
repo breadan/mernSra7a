@@ -13,7 +13,7 @@ import {
 import validate from "../../middleware/validate.js";
 // import middSignUp from "../../middleware/checkEmail.js";//
 import { auth } from "../../middleware/auth.js";
-import { verifyAdmen, verifyUserAccess, verifyUserAndAdmin } from "../../middleware/verifyToken.js";
+import { verifyAdmen, verifyToken, verifyUserAccess, verifyUserAndAdmin } from "../../middleware/verifyToken.js";
 import { photoUpload } from "../../middleware/photoUpload.js";
 
 const userRouter = express.Router();
@@ -28,10 +28,10 @@ userRouter.post("/v1/signUp", [validate.signUp], signUp, (err, data) => {
 userRouter.post("/v1/signIn", signIn);
 userRouter.post("/v1/profile", [auth], photoUpload.single("image"), profilePhoto);
 userRouter.get("/v1/verify/:token", verify);
-userRouter.get("/v1/users", getUsers);    //verifyUserAndAdmin
-userRouter.get("/v1/user/:id", getUser);
+userRouter.get("/v1/users", verifyToken,getUsers);    //verifyUserAndAdmin
+userRouter.get("/v1/user/:id",getUser);
 // update user
-userRouter.put("/v1/user/:id", [auth], updateUser);
+userRouter.put("/v1/user/:id", [auth,verifyUserAccess], updateUser);
 userRouter.delete("/v1/user/:id", [auth ], deleteUserProfile);//verifyUserAccess
 
 export default userRouter;

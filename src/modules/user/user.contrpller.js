@@ -15,12 +15,6 @@ import fs from "fs";
 
 const __dirname = dirname("../images");
 
-//to have url
-const logger = (req, res, next) => {
-  console.log(req.url);
-  next();
-};
-
 const signUp = asyncError(async (req, res, next) => {
   const user = await userModel.findOne({ email: req.body.email });
   if (user) {
@@ -43,7 +37,7 @@ const signUp = asyncError(async (req, res, next) => {
 export const verify = asyncError(async (req, res, next) => {
   const { token } = req.params;
   jwt.verify(token, process.env.JWT_SECRET2, async (err, decoded) => {
-    if (err) return next(new AppError("Unauthorized Y must LogIn First", 401));
+    if (err) return next(new AppError("Unauthorized Y must LogIn First", 422));
     await userModel.findOneAndUpdate(
       { email: decoded.email },
       { verified: true }
@@ -63,7 +57,7 @@ const signIn = asyncError(async (req, res, next) => {
   const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
   if (!user || !bcrypt.compareSync(password, user.password) || !user.verified) {
-    return next(new AppError("Unauthorized", 401));
+    return next(new AppError("Error In Log In Or Email Not Verified! ", 422));
   } else {
   //   const token = user.generateAuthToken(); //it create new token  //test it with code in schema
   // res.status(200).json({
