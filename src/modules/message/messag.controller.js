@@ -5,6 +5,7 @@ import { AppError } from "../../../utils/appError.js";
 
 const addMessage = asyncError(async (req, res, next) => {
   const { message, receivedId } = req.body;
+  console.log(receivedId)
   await messageModel.create({ message, receivedId, senderId: req.userId });
   res.status(201).json({
     status: httpStatusText.SUCCESS,

@@ -13,7 +13,7 @@ const rules = {
   },
 
   idRules: (req, res, next) => {
-    const receviedId = req.body.receviedId;
+    const receviedId = req.body;
     if (!receviedId) {
       next({
         name: "validation Error",
