@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { AppError } from "../../utils/appError.js";
 
 const verifyToken = (req, res, next) => {
   const token = req.headers.token;
@@ -9,25 +8,34 @@ const verifyToken = (req, res, next) => {
       req.user = decoded;
       next();
     } catch (e) {
-      next(new AppError( "Internal Server Error", 401));
-    }
+      return res.status(401).json({
+        Status: false,
+        message: "Invalid Token",
+      });    }
   } else {
-    next(new AppError( "no token provided", 401));
+    return res.status(401).json({
+      Status: false,
+      message: "No Token Provided",
+    });
   }
 };
 
 //NOTE: Where already have another auth that verify the token so I removed the verify token from verifyAdmen
 const verifyAdmen = (req, res, next) => {
-  const { role } = req.user;
-  if (role !== "admin") {
-    next(new AppError( "you are not admin", 401));
-  } else {
-    next();
-  }
+  verifyToken(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      return res.status(403).json({
+        Status: false,
+        message: "Not Allowed, Only Admin",
+      });
+    }
+  });
 };
 
 const verifyUserAccess = (req, res, next) => {
-  verifyToken (req, res, () => {
+  verifyToken(req, res, () => {
     if (req.user.id === req.params.id) {
       next();
     } else {
@@ -36,11 +44,11 @@ const verifyUserAccess = (req, res, next) => {
         message: "Not Allowed, Only User can access His Profile",
       });
     }
-  })
-}
+  });
+};
 const verifyUserAndAdmin = (req, res, next) => {
-  verifyToken (req, res, () => {
-    if (req.user.id === req.params.id ||req.user.role !== "admin") {
+  verifyToken(req, res, () => {
+    if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
     } else {
       return res.status(403).json({
@@ -48,6 +56,6 @@ const verifyUserAndAdmin = (req, res, next) => {
         message: "Not Allowed, Only User can access His Profile or Admin",
       });
     }
-  })
-}
+  });
+};
 export { verifyToken, verifyAdmen, verifyUserAndAdmin, verifyUserAccess };

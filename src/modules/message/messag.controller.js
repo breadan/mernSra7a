@@ -2,17 +2,26 @@ import { messageModel } from "../../../database/models/message.model.js";
 import asyncError from "../../../utils/asyncError.js";
 import httpStatusText from "../../../utils/httpStatusText.js";
 import { AppError } from "../../../utils/appError.js";
+import { userModel } from "../../../database/models/user.model.js";
 
 const addMessage = asyncError(async (req, res, next) => {
   const { message, receivedId } = req.body;
+  const userExist = await userModel.findById(receivedId);
+  if (!userExist) {
+    return next(new AppError("User not found", 404));
+  }
+  if(userExist) {
+    await messageModel.create({ message, receivedId, senderId: req.userId });
+    res.status(201).json({
+      status: httpStatusText.SUCCESS,
+      message: "Message added successfully",
+    });
+    // next(new AppError("Internal Server Error", 401));
+  }else {
+    console.error("Error adding message:", error);
+    return next(new AppError("User not found", 404));
+  }
   console.log(receivedId)
-  await messageModel.create({ message, receivedId, senderId: req.userId });
-  res.status(201).json({
-    status: httpStatusText.SUCCESS,
-    message: "Message added successfully",
-  });
-  console.error("Error adding message:", error);
-  next(new AppError("Internal Server Error", 401));
 });
 
 const getUserMessages = asyncError(async (req, res, next) => {

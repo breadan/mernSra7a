@@ -43,7 +43,7 @@ const signUp = asyncError(async (req, res, next) => {
 export const verify = asyncError(async (req, res, next) => {
   const { token } = req.params;
   jwt.verify(token, process.env.JWT_SECRET2, async (err, decoded) => {
-    if (err) return next(new AppError("Unauthorized", 401));
+    if (err) return next(new AppError("Unauthorized Y must LogIn First", 401));
     await userModel.findOneAndUpdate(
       { email: decoded.email },
       { verified: true }
@@ -75,10 +75,10 @@ const signIn = asyncError(async (req, res, next) => {
 
 const getUsers = asyncError(async (req, res, next) => {
   const users = await userModel.find().select("-password");
-  // It is not an error to return an em
   if (users) {
-    res.status(200).json({ status: httpStatusText.SUCCESS, data: { users } });
-    console.error(error);
+    return res
+      .status(201)
+      .json({ status: httpStatusText.SUCCESS, data: { users } });
   } else {
     next(new AppError("Internal Server Error", 401));
   }
@@ -94,16 +94,22 @@ const getUser = asyncError(async (req, res, next) => {
 });
 
 const updateUser = asyncError(async (req, res, next) => {
-  //TODO: update user
-  // const { id } = req.params;
-  const { name, email, password, age } = req.body;
+
+  const { name, password, age } = req.body;
   const user = await userModel.findByIdAndUpdate(
     req.userId,
-    { name, email, password, age },
+    { name, password, age },  
     { new: true }
   );
-  res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
-  next(new AppError("Internal Server Error", 401));
+  if(user) {
+
+    res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
+  }else{
+
+    next(new AppError("Internal Server Error", 401));
+  }
+
+ 
 });
 
 //upload profile photo
@@ -120,13 +126,12 @@ const updateUser = asyncError(async (req, res, next) => {
  */
 
 const profilePhoto = asyncError(async (req, res) => {
-
   //1
   if (!req.file) {
     return res.status(400).json({ message: "No File Selected" });
   }
   //2
-  const imagePath = path.join("images", req.file.filename)
+  const imagePath = path.join("images", req.file.filename);
   //3 -in another folder
   //4
 
@@ -142,7 +147,7 @@ const profilePhoto = asyncError(async (req, res) => {
     await cloudinaryRemove(user.profilePhoto.publicId);
   }
   user.profilePhoto = {
-    url: `/public/${req.file.filename}`
+    url: `/public/${req.file.filename}`,
   };
   await user.save();
 
@@ -171,15 +176,8 @@ const profilePhoto = asyncError(async (req, res) => {
  * 8- send response
  */
 const deleteUserProfile = asyncError(async (req, res) => {
-  const user = await userModel.findById(req.params.id);
-  if (!user) {
-    return res.status(404).json({
-      status: 404,
-      message: "User not found",
-    });
-  }
+  const user = await userModel.findByIdAndDelete(req.params.id);
   await cloudinaryRemove(user.profilePhoto.publicId);
-  await userModel.findByIdAndDelete(req.params.id);
   res.status(200).json({ message: "User Deleted Successfully" });
 });
 

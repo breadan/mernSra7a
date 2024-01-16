@@ -51,6 +51,10 @@ const userSchema = new Schema(
         values: ["user", "admin"],
         message: "Invalid role",
       },
+      isAdmin: {
+        type: Boolean,
+        default: false,
+      },
       default: "user",
     },
   },
