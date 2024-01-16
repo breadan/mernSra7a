@@ -76,4 +76,14 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+// const generateAuthToken = (userSchema.methods.generateAuthToken = function () {   //testit
+//   return jwt.sign(
+//     { id: this._id, isAdmin: this.isAdmin },
+//     process.env.JWT_SECRET,
+//     {
+//       expiresIn: process.env.JWT_EXPIRES_IN,
+//     }
+//   );
+// });
+
 export const userModel = model("User", userSchema);
