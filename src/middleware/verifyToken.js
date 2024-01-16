@@ -27,7 +27,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyUserAccess = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user._id === req.res.id) {
+    if (req.user._id === req.res.id) {        //?????
       next();
     } else {
       return res.status(403).json({
