@@ -539,5 +539,5 @@ export const htmlCode = (token) => {
 </body>
 
 </html>
-`;
-};
+`
+}

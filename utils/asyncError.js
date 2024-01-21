@@ -1,8 +1,8 @@
 // handle error in project (3)
 
 const asyncError = (fn) => (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
+  Promise.resolve(fn(req, res, next)).catch(next)
+}
 
 // const asyncError = (fn) => (req, res, next) => {
 //   return (req, res, next) => {
@@ -12,4 +12,4 @@ const asyncError = (fn) => (req, res, next) => {
 //   };
 // };
 
-export default asyncError;
+export default asyncError
