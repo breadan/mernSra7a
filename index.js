@@ -5,7 +5,6 @@ import xss from 'xss-clean'
 import helmet from 'helmet'
 import mongoSanitize from 'express-mongo-sanitize'
 import compression from 'compression'
-import config from './src/config/config.js'
 import userRouter from './src/modules/user/user.routes.js'
 import './database/dbConnection/connection.js'
 
