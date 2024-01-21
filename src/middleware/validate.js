@@ -16,7 +16,7 @@ const rules = {
 
   names: (req, res, next) => {
     const name = req.body.name
-    const specialCharacters=/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+    const specialCharacters = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
     if (specialCharacters.test(name)) {
       next({
         name: 'validation Error',
