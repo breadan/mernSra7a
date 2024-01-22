@@ -47,6 +47,12 @@ app.all('*', (req, res, next) => {
 
 app.use(errorHandler)
 
+// test it
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).json(err)
+})
+
 app.listen(5000, () => {
   console.log(`Example app listening on port ${5000}!`)
 })
