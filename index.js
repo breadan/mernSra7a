@@ -16,7 +16,7 @@ const app = express();
 // set up logger
 app.use(morgan('tiny'));
 
-// Set secruity headers
+// Set security headers
 app.use(helmet());
 
 // Prevent XSS attacks
