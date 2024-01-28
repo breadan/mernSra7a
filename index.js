@@ -10,6 +10,7 @@ import './database/dbConnection/connection.js';
 
 import messageRouter from './src/modules/message/message.routes.js';
 import { AppError, errorHandler } from './utils/appError.js';
+import { globalError } from './utils/globalError.js';
 
 const app = express();
 
@@ -46,10 +47,7 @@ app.all('*', (req, res, next) => {
 });
 
 // test it
-app.use((err, req, res, next) => {
-  // console.error(err.stack)
-  res.status(500).json(err);
-});
+app.use(globalError);
 
 app.listen(5000, () => {
   console.log(`Example app listening on port ${5000}!`);
