@@ -15,7 +15,7 @@ import {
 
 const messageRouter = express.Router();
 
-messageRouter.post('/', [validate.message, auth, verifyUserAccess], addMessage);
+messageRouter.post('/', [validate.message, auth], addMessage);
 messageRouter.get('/', [auth, verifyUserAccess], getUserMessages);
 messageRouter.patch('/:id', [auth, verifyUserAccess], updateMessage);
 messageRouter.delete('/:id', [auth, verifyUserAndAdmin], deleteMessage);
