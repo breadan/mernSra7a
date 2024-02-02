@@ -84,10 +84,12 @@ const getUser = asyncError(async (req, res, next) => {
 const updateUser = asyncError(async (req, res, next) => {
   const { name, password, age } = req.body;
   const user = await userModel.findByIdAndUpdate(
-    req.user.user._id,
+    req.params.id,
+    // req.user.user._id,
     { name, password, age },
     { new: true }
   );
+  console.log(req.user.user._id); //admin
   if (user) {
     res.status(200).json({ status: httpStatusText.SUCCESS, data: { user } });
   } else {
