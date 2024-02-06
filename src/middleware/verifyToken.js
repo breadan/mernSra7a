@@ -45,6 +45,7 @@ const verifyUserAccess = (req, res, next) => {
 const verifyAdmen = (req, res, next) => {
   verifyToken(req, res, () => {
     const check2 = req.user.user.role;
+    console.log(check2);
 
     if (check2 === 'admin') {
       next();
@@ -57,19 +58,19 @@ const verifyAdmen = (req, res, next) => {
   });
 };
 
-// const verifyUserAndAdmin = (req, res, next) => {
-//   verifyToken(req, res, () => {
-//     const check2 = req.user.user.role;
-//     console.log(check2);
-//     const { id } = req.params;
-//     if (check2 === 'admin' || req.user.user._id === id) {
-//       next();
-//     } else {
-//       return res.status(403).json({
-//         Status: false,
-//         message: 'Not Allowed, Only User can access His Profile or Admin',
-//       });
-//     }
-//   });
-// };
-export { verifyToken, verifyAdmen, verifyUserAccess };
+const verifyUserAndAdmin = (req, res, next) => {
+  verifyToken(req, res, () => {
+    const check2 = req.user.user.role;
+    console.log(check2c);
+    const { id } = req.params;
+    if (check2 === 'admin' || req.user.user._id === id) {
+      next();
+    } else {
+      return res.status(403).json({
+        Status: false,
+        message: 'Not Allowed, Only User can access His Profile or Admin',
+      });
+    }
+  });
+};
+export { verifyToken, verifyAdmen, verifyUserAndAdmin, verifyUserAccess };

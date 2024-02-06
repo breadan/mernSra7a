@@ -3,6 +3,7 @@ import asyncError from '../../../utils/asyncError.js';
 import httpStatusText from '../../../utils/httpStatusText.js';
 import { AppError } from '../../../utils/appError.js';
 import { userModel } from '../../../database/models/user.model.js';
+import { ObjectId } from 'mongodb';
 
 const addMessage = asyncError(async (req, res, next) => {
   const { message, receivedId } = req.body;
@@ -21,13 +22,13 @@ const addMessage = asyncError(async (req, res, next) => {
     console.error('Error adding message:');
     return next(new AppError('User not found', 404));
   }
-  console.log(receivedId);
 });
 
 const getUserMessages = asyncError(async (req, res, next) => {
-  const messages = await messageModel.paginate({
-    filter: { senderId: req.userId },
-  });
+  const { receivedId } = req.body;
+  const messages = await messageModel.find({ receivedId });
+  console.log(receivedId);
+
   if (!messages) {
     next(new AppError('No message For U', 404));
   } else {
@@ -44,8 +45,9 @@ const getUserMessages = asyncError(async (req, res, next) => {
 const updateMessage = asyncError(async (req, res, next) => {
   const { id } = req.params;
   const { message } = req.body;
+  console.log(id, message);
   const newMsg = await messageModel.findOneAndUpdate(
-    { _id: id, senderId: req.userId },
+    { _id: id },
     { message },
     { new: true }
   );
